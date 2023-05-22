@@ -7,8 +7,10 @@
 
 
 ## Practica domiciliaria: Sistema Montacargas.
-![Tinkercad](./img/Montacargas.png) ![Tinkercad](./img/DiagramaEsquematico.png)
+![Tinkercad](./img/Montacargas.png) 
 
+## Sistema Montacargas: diagrama esquemático.
+!![Tinkercad](./img/DiagramaEsquematico.png)
 
 ## Descripción
 Mi proyecto es un modelo de montacarga funcional para un hospital.
@@ -58,8 +60,7 @@ void EjecutarDisplay(int *actual, int *anterior, int intervalo)
 }
 ~~~
 
-## Sistema Montacargas: diagrama esquemático.
-![Tinkercad](./img/DiagramaEsquematico.png)
+
 
 ## Descripción
 Mi proyecto es un modelo de montacarga funcional para un hospital.
