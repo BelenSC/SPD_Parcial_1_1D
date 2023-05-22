@@ -8,7 +8,7 @@
 ![Montacargas](./img/MontacargasAgregado.png) 
 
 ## Sistema Montacargas: diagrama esquemático.
-![DiagramaEsquematico|100](./img/DiagramaEsquematicoAgregado.png)
+![DiagramaEsquematico|10](./img/DiagramaEsquematicoAgregado.png)
 
 #### Componentes
 
