@@ -1,10 +1,8 @@
 # Primer parcial
 ![Tinkercad](./img/ArduinoTinkercad.jpg)
 
-
 ## Integrante
 - Belen Soria
-
 
 ## Practica domiciliaria: Sistema Montacargas.
 ![Tinkercad](./img/Montacargas.png) 
@@ -12,15 +10,17 @@
 ## Sistema Montacargas: diagrama esquemático.
 ![Tinkercad](./img/DiagramaEsquematico.png)
 
-### Componentes
+#### Componentes
 
-• 3 botones, uno para subir pisos, otro para bajar pisos y otro para detener el montacarga.
-• 2 LEDs, uno verde que indicará cuando el montacarga este en movimiento, otro rojo que indique cuando el montacarga esté pausado.
-• Un display 7 segmentos el cual deberán informar en tiempo real en qué piso se encuentra el elevador.
+- 3 botones, uno para subir pisos, otro para bajar pisos y otro para detener el montacarga.
+- 2 LEDs, uno verde que indicará cuando el montacarga este en movimiento, otro rojo que indique cuando el montacarga esté pausado.
+- Un display 7 segmentos el cual deberán informar en tiempo real en qué piso se encuentra el elevador.
 
-### Requisitos
-• Se sabe que el tiempo de trayecto entre pisos es de 3 segundos (3000 ms).
-• Se deberá informar por monitor serial el piso en el que se encuentra el montacarga, este en funcionamiento o en pausa.
+#### Requisitos
+- Se sabe que el tiempo de trayecto entre pisos es de 3 segundos (3000 ms).
+- Se deberá informar por monitor serial el piso en el que se encuentra el montacarga, este en funcionamiento o en pausa.
+
+---
 
 ## Descripción
 Mi proyecto es un modelo de montacarga funcional para un hospital.
@@ -29,7 +29,7 @@ muestra el estado actual del montacargas en el display 7 segmentos.
 
 ## Función principal
 
-Esta funcion se encarga de ejecutar el display cada 3 segundos. Y permite que se pueda leer el estado de los botones.
+Esta funcion se encarga de ejecutar el display cada 3 segundos. Y permite detectar el estado de los botones en todo momento.
 
 actual y anterior son variables locales que representan a variables globales, las cuales almacenan el tiempo actual 
 contadorSistemaDisplay, estadoSistema también son variables globales que se encargan de cambiar el numero en el display.
