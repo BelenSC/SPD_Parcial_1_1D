@@ -8,7 +8,7 @@
 ![Montacargas](./img/MontacargasAgregado.png) 
 
 ## Sistema Montacargas: diagrama esquemático.
-![DiagramaEsquematico|10](./img/DiagramaEsquematicoAgregado.png)
+![DiagramaEsquematico](./img/DiagramaEsquematicoAgregado.png)
 
 #### Componentes
 
@@ -16,7 +16,7 @@
 - 2 LEDs, uno verde que indicará cuando el montacarga este en movimiento, otro rojo que indique cuando el montacarga esté pausado.
 - 1 display 7 segmentos el cual deberán informar en tiempo real en qué piso se encuentra el elevador.
 ##### Agregado
-- 1 otodiodo
+- 1 Fotodiodo
 - 1 Sensor de fuerza
 - 1 Sensor de distancia
 
