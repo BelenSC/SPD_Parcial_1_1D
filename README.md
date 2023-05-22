@@ -18,7 +18,7 @@
 • 2 LEDs, uno verde que indicará cuando el montacarga este en movimiento, otro rojo que indique cuando el montacarga esté pausado.
 • Un display 7 segmentos el cual deberán informar en tiempo real en qué piso se encuentra el elevador.
 
-### requisitos
+### Requisitos
 • Se sabe que el tiempo de trayecto entre pisos es de 3 segundos (3000 ms).
 • Se deberá informar por monitor serial el piso en el que se encuentra el montacarga, este en funcionamiento o en pausa.
 
