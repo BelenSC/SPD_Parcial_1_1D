@@ -5,16 +5,20 @@
 - Belen Soria
 
 ## Practica domiciliaria: Sistema Montacargas.
-![Tinkercad](./img/Montacargas.png) 
+![Montacargas](./img/MontacargasAgregado.png) 
 
 ## Sistema Montacargas: diagrama esquemático.
-![Tinkercad](./img/DiagramaEsquematico.png)
+![DiagramaEsquematico|100](./img/DiagramaEsquematicoAgregado.png)
 
 #### Componentes
 
 - 3 botones, uno para subir pisos, otro para bajar pisos y otro para detener el montacarga.
 - 2 LEDs, uno verde que indicará cuando el montacarga este en movimiento, otro rojo que indique cuando el montacarga esté pausado.
-- Un display 7 segmentos el cual deberán informar en tiempo real en qué piso se encuentra el elevador.
+- 1 display 7 segmentos el cual deberán informar en tiempo real en qué piso se encuentra el elevador.
+##### Agregado
+- 1 otodiodo
+- 1 Sensor de fuerza
+- 1 Sensor de distancia
 
 #### Requisitos
 - Se sabe que el tiempo de trayecto entre pisos es de 3 segundos (3000 ms).
@@ -71,10 +75,10 @@ void EjecutarDisplay(int *actual, int *anterior, int intervalo)
 ~~~
 
 ## Funciones 
-Explicacion funcion a funcion sobre el código.
+Explicacion función a función sobre el código.
 
 ### Función loop
-En la funcion loop tenemos el llamado a las funciones
+En la funcion loop tenemos el llamado a las funciones.
 
 LED_VERDE, LED_ROJO, BOTONSUBIR, BOTONBAJAR, BOTONPAUSAR, son define que se utilizan para agregar los botones y
  los leds asociandolos a pines de la placa arduino.
@@ -88,10 +92,14 @@ void loop()
   actualMillis =  millis();
   PrenderLedPrimero(LED_VERDE);
   
+  ActivarSensorFuerza(&actualMillis, &anteriorMillisSensorDistancia, INTERVALOSENSORDISTANCIA, estadoSistema);
+  
   VerificarBoton(BOTONSUBIR,LED_VERDE, LED_ROJO, 1 , "subiendo" );
   VerificarBoton(BOTONBAJAR,LED_VERDE, LED_ROJO, -1 , "bajando" );
   VerificarBotonPausar(BOTONPAUSAR,LED_VERDE, LED_ROJO);
   
+  PrenderSensorFuerzaSistemaSubiendo(SENSORFUERZA);
+
   EjecutarDisplay(&actualMillis, &anteriorMillis, INTERVALODISPLAY);
 }
 ~~~
@@ -242,6 +250,10 @@ void PrenderLedPrimero(int led)
   }
 }
 ~~~
+---
+## Agregado de componentes
+
+
 
 ---
 ## :robot: Link al proyecto
