@@ -1,0 +1,229 @@
+/*
+-----------CONSIGNA PRIMER PARCIAL----------------------------------
+Se nos pide armar un modelo de montacarga funcional como maqueta para
+un hospital. El objetivo es que implementes un sistema que pueda re-
+cibir ordenes de subir, bajar o pausar desde diferentes pisos y mues-
+tre el estado actual del montacargas en el display 7 segmentos.
+    
+---------------------------------------------------------------------
+*/
+
+#include <string.h>
+
+#define LED_A 12
+#define LED_B 13
+#define LED_C 7
+#define LED_D 8
+#define LED_E 9
+#define LED_F 11
+#define LED_G 10
+
+#define BOTONSUBIR 2
+#define BOTONBAJAR 3
+#define BOTONPAUSAR 4
+
+#define LED_VERDE 5
+#define LED_ROJO 6
+
+#define INTERVALODISPLAY 3000
+
+
+int flagPrimero = 1;
+
+int estadoSistema = 1;
+int estadoSistemaAnterior = 1;
+int contadorSistemaDisplay = -1;//Al incrementarse comienza en 0
+
+int flagTopePisos = 0;
+
+int actualMillis = 0;	
+int anteriorMillis = 0;
+
+int contadorPausar = 0;
+int lecturaPausar = 1;
+int ultimaLecturaPausar = 1;
+
+void PrenderLedPrimero(int led);
+void VerificarBoton(int boton, int ledPrendido, int ledPausado, int estado, String mensaje);
+void VerificarBotonPausar(int boton, int ledPrendido, int ledPausado);
+void EjecutarDisplay(int *actual, int *anterior, int intervalo);
+void MostrarNumeroDisplay(int contador, int estadoSistema);
+void MostrarNumero(int estadoA, int estadoB,int estadoC, int estadoD, int estadoE, int estadoF, int estadoG);
+
+void setup()
+{
+  pinMode(LED_A, OUTPUT);
+  pinMode(LED_B, OUTPUT);
+  pinMode(LED_C, OUTPUT);
+  pinMode(LED_D, OUTPUT);
+  pinMode(LED_E, OUTPUT);
+  pinMode(LED_F, OUTPUT);
+  pinMode(LED_G, OUTPUT);
+  
+  pinMode(LED_ROJO, OUTPUT);
+  pinMode(LED_VERDE, OUTPUT);
+  
+  pinMode(BOTONPAUSAR, INPUT_PULLUP);
+  pinMode(BOTONBAJAR, INPUT);
+  pinMode(BOTONSUBIR, INPUT);
+  
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  actualMillis =  millis();
+  PrenderLedPrimero(LED_VERDE);
+  
+  VerificarBoton(BOTONSUBIR,LED_VERDE, LED_ROJO, 1 , "subiendo" );
+  VerificarBoton(BOTONBAJAR,LED_VERDE, LED_ROJO, -1 , "bajando" );
+  VerificarBotonPausar(BOTONPAUSAR,LED_VERDE, LED_ROJO);
+  
+  EjecutarDisplay(&actualMillis, &anteriorMillis, INTERVALODISPLAY);
+}
+
+void PrenderLedPrimero(int led)
+{
+  if(flagPrimero == 1)
+  {
+    digitalWrite(led,HIGH);
+    flagPrimero = 0;
+    Serial.println("Estado actual montacargas: Sistema iniciando. ");
+  }
+}
+
+void VerificarBoton(int boton, int ledPrendido, int ledPausado, int estado, String mensaje)
+{
+  int lectura = digitalRead(boton);
+  if(lectura == HIGH)
+  {
+   Serial.print("Estado actual montacarga: ");
+   Serial.println(mensaje);
+   estadoSistema = estado;
+    
+   estadoSistemaAnterior = estadoSistema;
+   contadorPausar = 0;
+    
+   digitalWrite(ledPrendido, HIGH);
+   digitalWrite(ledPausado, LOW);
+  }
+}
+
+//Verifica si el boton de pausar fue activado
+void VerificarBotonPausar(int boton, int ledPrendido, int ledPausado)
+{
+  lecturaPausar = digitalRead(boton);
+  if (lecturaPausar != ultimaLecturaPausar)
+  {
+    if (lecturaPausar == LOW)
+    {
+      contadorPausar++;
+      Serial.print("Contador de boton pausado: ");
+      Serial.println(contadorPausar);
+    }
+    if(contadorPausar %2 == 0)
+      {
+        estadoSistema = estadoSistemaAnterior;
+      	digitalWrite(ledPrendido, HIGH);
+        digitalWrite(ledPausado, LOW);
+      }
+      else
+      {
+        estadoSistema = 0;
+        Serial.println("Estado actual montacarga: pausado.");
+        digitalWrite(ledPrendido, LOW);
+        digitalWrite(ledPausado, HIGH);
+      }
+    delay(50);
+  }
+  ultimaLecturaPausar = lecturaPausar;
+}
+
+void EjecutarDisplay(int *actual, int *anterior, int intervalo)
+{
+  if (*actual - *anterior> intervalo)
+  {
+    Serial.print("Estado actual montacarga: piso: ");
+    contadorSistemaDisplay = contadorSistemaDisplay + estadoSistema;
+    
+    if(contadorSistemaDisplay > 9)
+    { 
+      contadorSistemaDisplay = 9;
+      estadoSistema = 0;
+    }
+    else
+    {
+      if(contadorSistemaDisplay < 0)
+      {
+        Serial.println("Presione: subir");
+        contadorSistemaDisplay = 0;
+        estadoSistema = 0;
+      }
+    }
+  	Serial.println(contadorSistemaDisplay);
+    
+    MostrarNumeroDisplay(contadorSistemaDisplay, estadoSistema);
+    
+    *anterior = millis();
+  }
+}
+
+void MostrarNumeroDisplay(int contador, int estadoSistema)
+{
+  switch (contador)
+  {
+    case 0:
+      Serial.println("Estado actual montacargas: planta baja.");
+      MostrarNumero(HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,LOW);
+    break;
+    
+    case 1:
+      MostrarNumero(LOW,HIGH,HIGH,LOW,LOW,LOW,LOW);
+    break;
+    
+    case 2:
+      MostrarNumero(HIGH,HIGH,LOW,HIGH,HIGH,LOW,HIGH);
+    break;
+    
+    case 3:
+      MostrarNumero(HIGH,HIGH,HIGH,HIGH,LOW,LOW,HIGH);
+    break;
+    
+    case 4:
+	  MostrarNumero(LOW,HIGH,HIGH,LOW,LOW,HIGH,HIGH);
+    break;
+    
+    case 5:
+      MostrarNumero(HIGH,LOW,HIGH,HIGH,LOW,HIGH,HIGH);
+    break;
+    
+    case 6:
+      MostrarNumero(HIGH,LOW,HIGH,HIGH,HIGH,HIGH,HIGH);
+    break;
+
+    case 7:
+      MostrarNumero(HIGH,HIGH,HIGH,LOW,LOW,LOW,LOW);
+    break;
+
+    case 8:
+      MostrarNumero(HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH);
+    break;
+    
+    case 9:
+      MostrarNumero(HIGH,HIGH,HIGH,HIGH,LOW,HIGH,HIGH);
+      Serial.println("Estado actual montacargas: ultimo piso. Presione: bajar");
+    break;
+  }
+}
+
+//Enciende cada led del display dependiendo el estado que recibe
+void MostrarNumero(int estadoA, int estadoB,int estadoC, int estadoD, int estadoE, int estadoF, int estadoG)
+{
+  digitalWrite(LED_A, estadoA);
+  digitalWrite(LED_B, estadoB);
+  digitalWrite(LED_C, estadoC);
+  digitalWrite(LED_D, estadoD);
+  digitalWrite(LED_E, estadoE);
+  digitalWrite(LED_F, estadoF);
+  digitalWrite(LED_G, estadoG);
+}
