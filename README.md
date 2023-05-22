@@ -215,7 +215,6 @@ void MostrarNumeroDisplay(int contador, int estadoSistema)
 Esta funcion se encarga de encender y apagar los leds del display 7 segmentos
 
 ~~~ C (lenguaje en el que esta escrito)
-//Enciende cada led del display dependiendo el estado que recibe
 void MostrarNumero(int estadoA, int estadoB,int estadoC, int estadoD, int estadoE, int estadoF, int estadoG)
 {
   digitalWrite(LED_A, estadoA);
@@ -227,6 +226,24 @@ void MostrarNumero(int estadoA, int estadoB,int estadoC, int estadoD, int estado
   digitalWrite(LED_G, estadoG);
 }
 ~~~
+
+### MostrarNumero
+Esta funcion se encarga de encender el led cuando el sistema empieza, por defecto empieza en subida. Además de que lo notifica por pantalla.
+Solo se ejecuta una vez.
+
+~~~ C (lenguaje en el que esta escrito)
+void PrenderLedPrimero(int led)
+{
+  if(flagPrimero == 1)
+  {
+    digitalWrite(led,HIGH);
+    flagPrimero = 0;
+    Serial.println("Estado actual montacargas: Sistema iniciando. ");
+  }
+}
+~~~
+
+---
 ## :robot: Link al proyecto
 - [proyecto](https://www.tinkercad.com/things/bMnZ0p5rvni)
 ## :tv: Link al video del proceso
