@@ -246,7 +246,6 @@ void PrenderLedPrimero(int led)
 ---
 ## :robot: Link al proyecto
 - [proyecto](https://www.tinkercad.com/things/bMnZ0p5rvni)
-## :tv: Link al video del proceso
 
 ---
 
